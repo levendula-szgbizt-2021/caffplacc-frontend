@@ -1,11 +1,14 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
+  providers:[AuthService]
 })
 export class RegisterComponent implements OnInit {
 
@@ -16,7 +19,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService,
     ) { }
 
   get f() {
@@ -26,7 +30,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.registerform = this.formBuilder.group({
       username: ['', Validators.required],
-      email:['',Validators.required, Validators.email],
+      email:['',[Validators.required, Validators.email]],
       password: ['', [Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")]],
     })
     const confirmPasswordControl = new FormControl('', [sameValueAs(this.registerform, 'password')]);
@@ -34,12 +38,19 @@ export class RegisterComponent implements OnInit {
     this.registerform.addControl('password2', confirmPasswordControl)
   }
 
-  onSubmit(): void {
+  async onSubmit() {
     if (this.registerform.invalid) {
       return;
     }
-    //amig mas nem tud tortenni
-    alert(JSON.stringify(this.registerform.value))
+    this.errorMessage=""
+    try{
+      const ret = await this.authService.register(this.registerform.value).toPromise();
+    }
+   catch(e: any){
+      const error = e as HttpErrorResponse
+      this.errorMessage = error.message
+   }
+    
   }
 }
 export function sameValueAs(group: FormGroup, controlName: string): ValidatorFn {
