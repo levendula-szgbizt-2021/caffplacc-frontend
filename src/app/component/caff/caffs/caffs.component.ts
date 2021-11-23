@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CaffResponse } from 'src/app/shared/models/animation.model';
+import { AnimationResponse } from 'src/app/shared/models/animation.model';
 
 @Component({
   selector: 'app-caffs',
@@ -8,7 +8,7 @@ import { CaffResponse } from 'src/app/shared/models/animation.model';
 })
 export class CaffsComponent implements OnInit {
 
-  caffs: Array<CaffResponse> = [];
+  caffs: Array<AnimationResponse> = [];
   constructor() { }
 
   ngOnInit(): void {
