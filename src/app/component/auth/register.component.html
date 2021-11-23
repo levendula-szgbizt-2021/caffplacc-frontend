@@ -54,7 +54,10 @@
                 <div>{{errorMessage}}</div>
             </div>
             <div class="wrapper-button">
-                <button class="btn btn-dark">
+                <div *ngIf="loading" class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <button *ngIf="!loading" class="btn btn-dark">
                     Sign up
                     <!--TODO: login redirecting?-->
                     <!--using ngIf and isLoggedin variable after successful onSubmit then -->

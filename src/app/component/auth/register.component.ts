@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { textChangeRangeIsUnchanged } from 'typescript';
 
 @Component({
   selector: 'app-register',
@@ -15,6 +16,7 @@ export class RegisterComponent implements OnInit {
   submitted = false;
   errorMessage = '';
   registerform!: FormGroup;
+  loading=false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -44,7 +46,10 @@ export class RegisterComponent implements OnInit {
     }
     this.errorMessage=""
     try{
+      this.loading = true;
       const ret = await this.authService.register(this.registerform.value).toPromise();
+      this.router.navigateByUrl("/login")
+      this.loading=false;
     }
    catch(e: any){
       const error = e as HttpErrorResponse
