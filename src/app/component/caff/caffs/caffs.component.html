@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="row row-cols-4">
+      <div class="col" *ngFor="let item of caffs">
+        <div class="card border-dark mb-3" style ="cursor:pointer" [routerLink]="['/caffs',item.id]">
+            <!--TODO: ide jon majd a beerkezo caffban talalhato previewLink a '...' helyere?-->
+            <img class="card-img-top" src="..." alt="Caff image">
+            <div class="card-body">
+              <h5 class="card-title">{caff.title}}</h5>
+              <!--TODO: a meretet meg fogjuk kapni a backendtol?-->
+              <p class="card-text">Size placeholder</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Created by {{item.uploader}}</small>
+            </div>
+          </div>
+      </div>
+    </div>
+</div>
+
