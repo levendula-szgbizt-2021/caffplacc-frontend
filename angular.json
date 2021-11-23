@@ -72,7 +72,8 @@
               "browserTarget": "caffplacc-client:build:production"
             },
             "development": {
-              "browserTarget": "caffplacc-client:build:development"
+              "browserTarget": "caffplacc-client:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
