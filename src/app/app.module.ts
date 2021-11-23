@@ -10,13 +10,17 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './component/auth/login.component';
 import { AuthInterceptor } from './helpers/auth.interceptor';
 import { RegisterComponent } from './component/auth/register.component';
+import { CaffsComponent } from './component/caff/caffs/caffs.component';
+import { CaffDetailsComponent } from './component/caff/caff-details/caff-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    CaffsComponent,
+    CaffDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +31,7 @@ import { RegisterComponent } from './component/auth/register.component';
     NgbModule,
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
-  bootstrap: [AppComponent, HomeComponent]
+  bootstrap: [AppComponent, HomeComponent,CaffsComponent,CaffDetailsComponent]
 })
 export class AppModule { }
 
