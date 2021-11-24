@@ -6,25 +6,25 @@
         <a href="/home" class="nav-link" routerLink="home">Home </a>
       </li>
       <li class="nav-item">
-        <a href="/user" class="nav-link" *ngIf="isLoggedIn" routerLink="user">User</a>
+        <a href="/caffs" class="nav-link" *ngIf="currentLoggedIn" routerLink="user">Caffs</a>
       </li>
     </ul>
 
-    <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
+    <ul class="navbar-nav ml-auto" *ngIf="!currentLoggedIn">
       <li class="nav-item">
-        <a href="" class="nav-link" routerLink="register">Sign Up</a>
+        <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
       </li>
       <li class="nav-item">
         <a href="/login" class="nav-link" routerLink="login">Login</a>
       </li>
     </ul>
 
-    <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
+    <ul class="navbar-nav ml-auto" *ngIf="currentLoggedIn">
       <li class="nav-item">
-        <a href="" class="nav-link" routerLink="profile"> username placeholder</a>
+        <a href="" class="nav-link" routerLink="profile"> Profile </a>
       </li>
       <li class="nav-item">
-        <a href class="nav-link" >LogOut</a>
+        <a href class="nav-link" (click)="logout()" >Sign out</a>
       </li>
     </ul>
   </nav>

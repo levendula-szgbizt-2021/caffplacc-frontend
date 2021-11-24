@@ -8,7 +8,7 @@
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-            <label for="username">Username</label>
+            <label for="username">{{valami}}</label>
             <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
                 <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                     <div *ngIf="f.username.errors.required">Username is required</div>
@@ -30,11 +30,9 @@
 
         <div class="form-group">
             <div class="wrapper-button">
-                <button class="btn btn-dark">
+                <button class="btn btn-dark" (update)=addNewValue()>
                     Login
-                    <!--TODO: login redirecting?-->
-                    <!--using ngIf and isLoggedin variable after successful onSubmit then -->
-                    <!--<a href="" etc.>-->
+                    
                 </button>
             </div>
         </div>
