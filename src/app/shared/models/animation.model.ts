@@ -12,7 +12,7 @@ export interface AnimationDetailedResponse{
 	uploaderUserName: string,
 	uploadDate: string,
 	hash: string,
-	comments: CommentResponse
+	comments: CommentResponse[]
 }
 
 export interface CommentResponse{

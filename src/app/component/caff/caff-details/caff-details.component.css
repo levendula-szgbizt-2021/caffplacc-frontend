@@ -1,0 +1,11 @@
+.comment-header{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.loading-spinner{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
