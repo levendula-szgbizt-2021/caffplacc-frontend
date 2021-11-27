@@ -51,3 +51,11 @@ export interface Paged<T>{
 }
 
 export type AnimationListResponse = Paged<AnimationResponse>;
+
+export interface CreateAnimationRequest{
+
+}
+
+export interface UpdateAnimationRequest{
+	
+}

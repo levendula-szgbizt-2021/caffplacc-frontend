@@ -2,7 +2,7 @@ import { query } from '@angular/animations';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AnimationDetailedResponse, AnimationListResponse } from '../shared/models/animation.model';
+import { AnimationDetailedResponse, AnimationListResponse, CreateAnimationRequest } from '../shared/models/animation.model';
 
 const ANIM_API = '/api/anim';
 
@@ -28,6 +28,15 @@ export class CaffService {
 
   public GetAnimationDetail(id:string){
     return this.http.get<AnimationDetailedResponse>(ANIM_API+"/"+id,httpOptions);
+  }
+
+  public CreateAnimation(title: string, file :File){
+    var formData = new FormData();
+    formData.append("title",title)
+    formData.append("file",file);
+    return this.http.post("/anim",formData,{
+      headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' })
+    });
   }
 
 }
