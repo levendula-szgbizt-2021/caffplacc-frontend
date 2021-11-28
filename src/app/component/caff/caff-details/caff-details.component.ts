@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AnimationDetailedResponse, CommentResponse } from 'src/app/shared/models/animation.model';
 import { CaffService } from 'src/app/services/caff.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-caff-details',
@@ -13,20 +14,61 @@ export class CaffDetailsComponent implements OnInit {
   caff?: AnimationDetailedResponse
 
   commentStr:string = ""
+  id ="";
+
+  edit=false;
+  editStr="";
+
 
   constructor(
     private caffService: CaffService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private modalService: NgbModal,
+    private router: Router,
     ) { }
 
   async ngOnInit() {
     const id = this.route.snapshot.params["id"]
-    this.caff = await this.caffService.GetAnimationDetail(id).toPromise();
+    this.id = id;
+    await this.invalidate();
   }
 
   async onComment(){
     console.log("comment sent ",this.commentStr);
     //TODO handle this normally
+  }
+
+  async onDownload(){
+    await this.caffService.DownloadAnimation(this.id)
+  }
+
+  onEdit(){
+    this.edit = true;
+    this.editStr=this.caff?.title || "";
+  }
+
+  async invalidate(){
+    this.caff = await this.caffService.GetAnimationDetail(this.id).toPromise();
+  }
+
+  async onTitleSave(){
+    try{
+      await this.caffService.UpdateAnimation(this.id,this.editStr).toPromise();
+      await this.invalidate();
+      this.edit = false;
+    }
+    catch(e){
+      console.log(e);
+    }
+  }
+
+  onDelete(content:any){
+    this.modalService.open(content).result.then(async (value)=>{
+      if(value == "Ok"){
+        await this.caffService.DeleteAnimation(this.id).toPromise();
+        this.router.navigateByUrl("/my-caffs");
+      }
+    })
   }
 
 }

@@ -2,6 +2,8 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from "@angular/c
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 
+const TOKEN_KEY = 'auth-token-caffplacc';
+
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
@@ -9,7 +11,7 @@ export class AuthInterceptor implements HttpInterceptor {
               next: HttpHandler): Observable<HttpEvent<any>> {
 
 		//TODO iderakni a tokent, ha tudjuk honnan van, meg egy értelmesebb név
-        const idToken = localStorage.getItem("id_token");
+        const idToken = localStorage.getItem(TOKEN_KEY);
 
         if (idToken) {
             const cloned = req.clone({
