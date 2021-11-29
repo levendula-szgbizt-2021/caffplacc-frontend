@@ -29,7 +29,8 @@ export class AppComponent implements OnInit {
     this.router.navigateByUrl("/caffs?search="+this.search);
   }
 
-  logout(){
+  logout(event: MouseEvent){
+    event.preventDefault();
     this.authService.logout();
   }
 }
