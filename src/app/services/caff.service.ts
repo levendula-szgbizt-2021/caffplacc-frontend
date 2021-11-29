@@ -58,6 +58,13 @@ export class CaffService {
     document.body.removeChild(anchor);
   }
 
+  public async PreviewAnimation(id:string){
+    var res :any = await  this.http.get("/api/anim/"+ id + "/preview",{...httpOptions, responseType: 'blob' as 'json'}).toPromise()
+    let blob = [];
+    blob.push(res);
+    return window.URL.createObjectURL(new Blob(blob,{type: "image/GIF"}));
+  }
+
   public UpdateAnimation(id:string, title:string){
     return this.http.put("/api/anim/"+id,{title:title},httpOptions);
   }

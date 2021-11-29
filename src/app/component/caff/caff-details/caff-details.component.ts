@@ -72,4 +72,9 @@ export class CaffDetailsComponent implements OnInit {
     })
   }
 
+  async previewImage(event: any, id: string){
+    var url = await this.caffService.PreviewAnimation(id);
+    event.target.src = url;
+  }
+
 }

@@ -1,13 +1,15 @@
 <div class="container">
+	<h2>Add new animation</h2>
+	<hr>
 		<label htmlFor="caff-upload-title">Title:</label>
 		<input id="caff-upload-title" class="form-control" [(ngModel)]="title">
 		<label htmlFor="caff-upload-file">Animation file:</label>
 		<input type="file" id="caff-upload-file" class="form-control" (change)="handleFileInput($event)">
-		<div class="d-flex flex-row justify-content-between">
+		<div class="d-flex flex-row justify-content-between my-2">
 			<button class="btn btn-success" (click)="onSubmit()">
 				Upload
 			</button>
-			<button class="btn btn-dark">
+			<button class="btn btn-dark" [routerLink]="['/my-caffs']">
 				Cancel
 			</button>
 		</div>
