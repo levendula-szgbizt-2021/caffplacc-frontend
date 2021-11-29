@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CaffService } from 'src/app/services/caff.service';
 import { AnimationResponse } from 'src/app/shared/models/animation.model';
 
@@ -15,17 +15,24 @@ export class MyCaffComponent implements OnInit {
   constructor(
     private caffService: CaffService,
     private route: ActivatedRoute,
+    private router: Router,
     ) {}
 
 
-    page=0;
+
+    search = "";
+    page=1;
     totalPages=0;
     totalElements = 0;
     pageSize=20;
   
     async ngOnInit() {
       this.loading = true
-      this.invalidate();
+      this.route.queryParamMap.subscribe(map =>{
+        this.search = map.get("search") || ""
+        this.page = parseInt(map.get("page")|| '1')
+        this.invalidate();
+      })
       this.loading = false
     }
   
@@ -35,16 +42,19 @@ export class MyCaffComponent implements OnInit {
     }
   
     onPageChange(){
-      this.invalidate();
+      const query : Params = {search: this.search, page:this.page}
+      this.router.navigate([],    {
+        relativeTo: this.route,
+        queryParams: query, 
+        queryParamsHandling: 'merge', // remove to replace all query params by provided
+      })
     }
   
     async invalidate(){
-      const snapshot = this.route.snapshot;
-      let search = snapshot.queryParamMap.get("search") || ""
-      const res = await this.caffService.GetAnimations(search,this.page-1,this.pageSize).toPromise();
+      const res = await this.caffService.GetAnimations(this.search,this.page-1,this.pageSize).toPromise();
       this.totalPages = res.totalPages;
       this.totalElements =res.totalElements;
       this.caffs = res.content
-    }
+    }  
 
 }

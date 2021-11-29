@@ -12,6 +12,8 @@ export class AppComponent implements OnInit {
   title = 'caffplacc-client'; 
   currentLoggedIn!: boolean;
 
+  search =""
+
   constructor(private authService: AuthService, private router: Router) {
   }
 
@@ -20,6 +22,11 @@ export class AppComponent implements OnInit {
       {
         this.currentLoggedIn = data;
       })
+  }
+
+  onSearch(){
+    console.log(this.search)
+    this.router.navigateByUrl("/caffs?search="+this.search);
   }
 
   logout(){

@@ -10,6 +10,12 @@
       </li>
     </ul>
 
+    <div class="d-flex">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" [(ngModel)]="search">
+      <button class="btn btn-link" type="submit" (click)="onSearch()">Search</button>
+    </div>
+
+
     <ul class="navbar-nav ml-auto" *ngIf="!currentLoggedIn">
       <li class="nav-item">
         <a href="/register" class="nav-link" routerLink="register">Sign Up</a>

@@ -20,7 +20,7 @@ export class CaffService {
   public GetAnimations(search:string="",page:number=0,pageSize=20, sorted=false): Observable<AnimationListResponse>{
       const params = new URLSearchParams();
       if(search)
-       params.set("query",search);
+       params.set("title",search);
       params.set("page",page.toFixed(0));
       params.set("size",pageSize.toFixed(0))
       return this.http.get<AnimationListResponse>(ANIM_API+"/search?"+params.toString(),httpOptions);
@@ -29,7 +29,7 @@ export class CaffService {
   public GetMyAnimations(search:string="",page:number=0,pageSize=20, sorted=false): Observable<AnimationListResponse>{
     const params = new URLSearchParams();
     if(search)
-     params.set("query",search);
+     params.set("title",search);
     params.set("page",page.toFixed(0));
     params.set("size",pageSize.toFixed(0))
     return this.http.get<AnimationListResponse>(ANIM_API+"?"+params.toString(),httpOptions);
