@@ -1,6 +1,6 @@
 <div class="card my-2 p-2">
 	<div class="d-flex flex-row align-items-start">
-		<div class="fw-light small-text">{{comment?.date}} - {{comment?.userName}}</div>
+		<div class="fw-light small-text">{{toDateFormat(comment?.date)}} - {{comment?.userName}}</div>
 		<div class="flex-grow-1"></div>
 		<button class="btn btn-link p-0 m-0" (click)="onEditOpen()">
 			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">

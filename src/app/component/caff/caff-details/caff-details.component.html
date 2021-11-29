@@ -29,7 +29,7 @@
 				<button class="btn btn-light" (click)="onTitleSave()">Save</button>
 			</div>
 			<p class="mb-0">Uploaded by: {{caff?.uploaderUserName}}</p>
-			<p class="mb-0">Uploaded at: {{caff?.uploadDate}}</p>
+			<p class="mb-0">Uploaded at: {{toDateFormat(caff?.uploadDate)}}</p>
 			<p class="mb-0">File size: {{caff?.fileSizeInMb}} MB</p>
 			<div>
 				SHA2 Hash: {{caff?.hash}}
@@ -47,7 +47,6 @@
 		<button class="btn btn-light" (click)="onComment()">Send</button>
 	</div>
 </div>
-
 <ng-template #deleteAnimModal let-modal>
 	<div class="modal-header">
 	  <h4 class="modal-title" id="modal-basic-title">Deleting animation</h4>

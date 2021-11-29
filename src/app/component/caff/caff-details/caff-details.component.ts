@@ -3,6 +3,7 @@ import { AnimationDetailedResponse, CommentResponse } from 'src/app/shared/model
 import { CaffService } from 'src/app/services/caff.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'app-caff-details',
@@ -75,6 +76,10 @@ export class CaffDetailsComponent implements OnInit {
   async previewImage(event: any, id: string){
     var url = await this.caffService.PreviewAnimation(id);
     event.target.src = url;
+  }
+
+  toDateFormat(str?: string){
+    return dayjs(str).format("YYYY.MM.DD. HH:mm:ss")
   }
 
 }

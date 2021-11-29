@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as dayjs from 'dayjs';
 import { CaffService } from 'src/app/services/caff.service';
 import { CommentResponse } from 'src/app/shared/models/animation.model';
 
@@ -52,5 +53,9 @@ export class CommentComponent implements OnInit {
         this.onChangeEvent.emit("delete")
       }
     })
+  }
+
+  toDateFormat(str?: string){
+    return dayjs(str).format("YYYY.MM.DD. HH:mm:ss")
   }
 }
