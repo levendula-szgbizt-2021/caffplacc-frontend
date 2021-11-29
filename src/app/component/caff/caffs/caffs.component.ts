@@ -21,17 +21,11 @@ export class CaffsComponent implements OnInit {
   page=0;
   totalPages=0;
   totalElements = 0;
-  pageSize=1;
+  pageSize=20;
 
   async ngOnInit() {
     this.loading = true
-    const snapshot = this.route.snapshot;
-    let search = snapshot.queryParamMap.get("search") || ""
-    let page = parseInt(snapshot.queryParamMap.get("page") ||"0") || 0
-    const res = await this.caffService.GetAnimations(search,page,this.pageSize).toPromise();
-    this.totalPages = res.totalPages;
-    this.totalElements =res.totalElements;
-    this.caffs = res.content
+    this.invalidate();
     this.loading = false
   }
 
@@ -40,6 +34,16 @@ export class CaffsComponent implements OnInit {
     event.target.src = url;
   }
 
+  onPageChange(){
+    this.invalidate();
+  }
 
-  
+  async invalidate(){
+    const snapshot = this.route.snapshot;
+    let search = snapshot.queryParamMap.get("search") || ""
+    const res = await this.caffService.GetAnimations(search,this.page-1,this.pageSize).toPromise();
+    this.totalPages = res.totalPages;
+    this.totalElements =res.totalElements;
+    this.caffs = res.content
+  }  
 }

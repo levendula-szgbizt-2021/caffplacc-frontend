@@ -17,21 +17,34 @@ export class MyCaffComponent implements OnInit {
     private route: ActivatedRoute,
     ) {}
 
-  page=1;
 
-  async ngOnInit() {
-    this.loading = true
-    const snapshot = this.route.snapshot;
-    let search = snapshot.queryParamMap.get("search") || ""
-    let page = parseInt(snapshot.queryParamMap.get("page") ||"0") || 0
-    const res = await this.caffService.GetAnimations(search,page).toPromise();
-    this.caffs = res.content
-    this.loading = false
-  }
-
-  async previewImage(event: any, id: string){
-    var url = await this.caffService.PreviewAnimation(id);
-    event.target.src = url;
-  }
+    page=0;
+    totalPages=0;
+    totalElements = 0;
+    pageSize=20;
+  
+    async ngOnInit() {
+      this.loading = true
+      this.invalidate();
+      this.loading = false
+    }
+  
+    async previewImage(event: any, id: string){
+      var url = await this.caffService.PreviewAnimation(id);
+      event.target.src = url;
+    }
+  
+    onPageChange(){
+      this.invalidate();
+    }
+  
+    async invalidate(){
+      const snapshot = this.route.snapshot;
+      let search = snapshot.queryParamMap.get("search") || ""
+      const res = await this.caffService.GetAnimations(search,this.page-1,this.pageSize).toPromise();
+      this.totalPages = res.totalPages;
+      this.totalElements =res.totalElements;
+      this.caffs = res.content
+    }
 
 }

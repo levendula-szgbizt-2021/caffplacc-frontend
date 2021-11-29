@@ -17,21 +17,21 @@ export class CaffService {
 
   constructor(private http: HttpClient) { }
 
-  public GetAnimations(search:string="",page:number=1,pageSize=20, sorted=false): Observable<AnimationListResponse>{
+  public GetAnimations(search:string="",page:number=0,pageSize=20, sorted=false): Observable<AnimationListResponse>{
       const params = new URLSearchParams();
       if(search)
        params.set("query",search);
-      params.set("pageNumber",page.toFixed(0));
-      params.set("pageSize",pageSize.toFixed(0))
+      params.set("page",page.toFixed(0));
+      params.set("size",pageSize.toFixed(0))
       return this.http.get<AnimationListResponse>(ANIM_API+"/search?"+params.toString(),httpOptions);
   }
 
-  public GetMyAnimations(search:string="",page:number=1,pageSize=20, sorted=false): Observable<AnimationListResponse>{
+  public GetMyAnimations(search:string="",page:number=0,pageSize=20, sorted=false): Observable<AnimationListResponse>{
     const params = new URLSearchParams();
     if(search)
      params.set("query",search);
-    params.set("pageNumber",page.toFixed(0));
-    params.set("pageSize",pageSize.toFixed(0))
+    params.set("page",page.toFixed(0));
+    params.set("size",pageSize.toFixed(0))
     return this.http.get<AnimationListResponse>(ANIM_API+"?"+params.toString(),httpOptions);
 }
 
