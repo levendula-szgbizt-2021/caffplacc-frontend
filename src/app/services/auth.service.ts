@@ -1,11 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginRequest, LoginResponse, RegisterRequest } from '../shared/models/auth.model';
 import { TokenService } from './token.service';
-import { map } from 'rxjs/operators';
-import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 //TODO: replace with ours when its published by Ákos
 const AUTH_API = 'http://localhost:8081/api/auth/';
@@ -21,11 +19,10 @@ const httpOptions = {
 export class AuthService {
 
   public loggedInSubject= new BehaviorSubject<boolean>(false);
-
+  private userId: string = '';
+  private role: string[] = [];
 
   constructor(private http: HttpClient, private tokenService: TokenService, private router: Router) { 
-    //this.loggedInSubject = new BehaviorSubject<any>(tokenService.getToken());
-    //this.loggedIn = this.loggedInSubject.asObservable();
   }
 
   sendUpdate(message: boolean) { 
@@ -44,6 +41,13 @@ export class AuthService {
     return this.http.post(AUTH_API + 'register', regDto, {responseType:'text'});
   }
 
+  getUserId(){
+    return this.userId;
+  }
+
+  getRole(){
+    return this.role;
+  }
 
   logout(){
     this.tokenService.signOut();

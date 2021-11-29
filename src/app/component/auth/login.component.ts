@@ -10,20 +10,15 @@ import { TokenService } from 'src/app/services/token.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
-  providers:[AuthService]
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
 
   submitted = false;
+  
   errorMessage = '';
   loginForm!: FormGroup;
   loading = false;
-  valami = false;
-  bejelentkezve = false;
-
-  @Output('update') notifyParent = new EventEmitter<boolean>();
-
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -53,11 +48,7 @@ export class LoginComponent implements OnInit {
                 data => {
                     this.tokenService.saveToken(data.token);
                     this.authService.sendUpdate(true);
-                    //teszt
-                    this.valami = this.authService.loggedInSubject.value;
-                    console.log("faszom")
-                    console.log(this.authService.loggedInSubject.value)
-                    
+                    this.router.navigate(['/home']);
                 },
                 error => {
                     this.errorMessage = error;
@@ -65,10 +56,5 @@ export class LoginComponent implements OnInit {
                 });
   }
 
-  addNewValue(){
-    this.notifyParent.emit(true);
-  }
-
-  
 }
 

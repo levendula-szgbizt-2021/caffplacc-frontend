@@ -12,11 +12,7 @@ export class AppComponent implements OnInit {
   title = 'caffplacc-client'; 
   currentLoggedIn!: boolean;
 
-  //isUserAuthenticated = false;
-  //authSubscription!: Subscription;
-  
-  constructor(private authService: AuthService, private router: Router, private cd: ChangeDetectorRef) {
-    //this.authService.loggedIn.subscribe(x => this.currentLoggedIn = x);
+  constructor(private authService: AuthService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -26,10 +22,6 @@ export class AppComponent implements OnInit {
       })
   }
 
-  /*ngOnDestroy(){
-    this.authSubscription.unsubscribe(); // make sure to unsubscribe
-  }*/
- 
   logout(){
     this.authService.logout();
   }

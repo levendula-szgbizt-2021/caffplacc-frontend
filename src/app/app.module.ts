@@ -13,6 +13,7 @@ import { RegisterComponent } from './component/auth/register.component';
 import { CaffsComponent } from './component/caff/caffs/caffs.component';
 import { CaffDetailsComponent } from './component/caff/caff-details/caff-details.component';
 import { AddCaffComponent } from './component/caff/add-caff/add-caff.component';
+import { EditProfileComponent } from './component/auth/edit-profile.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AddCaffComponent } from './component/caff/add-caff/add-caff.component';
     RegisterComponent,
     CaffsComponent,
     CaffDetailsComponent,
-    AddCaffComponent
+    AddCaffComponent,
+    EditProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,7 @@ import { AddCaffComponent } from './component/caff/add-caff/add-caff.component';
     NgbModule,
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
-  bootstrap: [AppComponent, HomeComponent,CaffsComponent,CaffDetailsComponent]
+  bootstrap: [AppComponent, HomeComponent,CaffsComponent,CaffDetailsComponent,EditProfileComponent]
 })
 export class AppModule { }
 
