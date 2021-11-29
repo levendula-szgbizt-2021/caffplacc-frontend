@@ -8,7 +8,7 @@ import { CaffService } from 'src/app/services/caff.service';
 })
 export class AddCaffComponent implements OnInit {
   title = "";
-  file?: File;
+  file: File | null = null;
  
 
   constructor(private caffService: CaffService) { }
@@ -16,9 +16,17 @@ export class AddCaffComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public onSubmit(){
-    if(this.file)
-      this.caffService.CreateAnimation(this.title,this.file);
+  public async onSubmit(){
+    console.log("Akármi",this.title,this.file)
+    if(this.file){
+      console.log(typeof(this.file))
+      await this.caffService.CreateAnimation(this.title,this.file).toPromise();
+    }
+      
+  }
+
+  handleFileInput(e: any) {
+    this.file = e.target.files?.item(0) || null;
   }
 
 }

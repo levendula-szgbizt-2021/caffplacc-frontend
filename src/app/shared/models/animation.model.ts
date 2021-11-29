@@ -52,10 +52,11 @@ export interface Paged<T>{
 
 export type AnimationListResponse = Paged<AnimationResponse>;
 
-export interface CreateAnimationRequest{
-
-}
 
 export interface UpdateAnimationRequest{
-	
+	title:string,
+}
+
+export interface CommentCreateUpdateRequest{
+	content:string,
 }
