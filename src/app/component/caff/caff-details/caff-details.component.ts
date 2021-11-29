@@ -34,8 +34,8 @@ export class CaffDetailsComponent implements OnInit {
   }
 
   async onComment(){
-    console.log("comment sent ",this.commentStr);
-    //TODO handle this normally
+    await this.caffService.AddComment(this.id,this.commentStr).toPromise();
+    await this.invalidate();
   }
 
   async onDownload(){
@@ -48,6 +48,7 @@ export class CaffDetailsComponent implements OnInit {
   }
 
   async invalidate(){
+    console.log("invalidate happened");
     this.caff = await this.caffService.GetAnimationDetail(this.id).toPromise();
   }
 

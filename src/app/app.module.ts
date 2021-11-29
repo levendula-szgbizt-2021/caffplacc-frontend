@@ -15,6 +15,7 @@ import { CaffDetailsComponent } from './component/caff/caff-details/caff-details
 import { AddCaffComponent } from './component/caff/add-caff/add-caff.component';
 import { EditProfileComponent } from './component/auth/edit-profile.component';
 import { MyCaffComponent } from './component/caff/my-caff/my-caff.component';
+import { CommentComponent } from './component/caff/comment/comment.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { MyCaffComponent } from './component/caff/my-caff/my-caff.component';
     CaffDetailsComponent,
     AddCaffComponent,
     EditProfileComponent,
-    MyCaffComponent
+    MyCaffComponent,
+    CommentComponent
   ],
   imports: [
     BrowserModule,

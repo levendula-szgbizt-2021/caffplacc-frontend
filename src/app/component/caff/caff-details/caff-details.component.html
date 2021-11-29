@@ -40,15 +40,7 @@
 		</div>
 	</div>
 	<div *ngFor="let comment of caff.comments">
-		<div class="card">
-			<div class="comment-header">
-				<div class="fw-light">{{comment.date}} - {{comment.userName}}</div>
-				<div></div>
-			</div>
-			<div>
-				{{comment.content}}
-			</div>
-		</div>
+		<app-comment [comment]="comment" [animId]="id" (myChange)="invalidate()"></app-comment>
 	</div>
 	<div class="card p-2">
 		<input class="form-control" [(ngModel)]="commentStr">
