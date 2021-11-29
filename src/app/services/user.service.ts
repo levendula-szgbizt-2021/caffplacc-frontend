@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
 import { UpdateProfileRequest, UpdateProfilResponse } from '../shared/models/auth.model';
 import { TokenService } from './token.service';
 
-const TOKEN_KEY = 'auth-token-caffplacc';
-const USER_URL = 'api/user/settings'
+
+const USER_URL = 'api/user/'
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
