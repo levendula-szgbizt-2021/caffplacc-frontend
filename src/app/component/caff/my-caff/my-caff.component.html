@@ -1,12 +1,16 @@
 <div class="container">
+  <div class="d-flex flex-row">
+    <h2>My animations</h2>
+    <div class="flex-grow-1"></div>
+    <button class="btn btn-light" [routerLink]="['/caffs','add']">Add new animation</button>
+  </div>
+  <hr>
     <div class="row row-cols-4">
       <div class="col" *ngFor="let item of caffs">
         <div class="card border-dark mb-3" style ="cursor:pointer" [routerLink]="['/caffs',item.id]">
-            <!--TODO: ide jon majd a beerkezo caffban talalhato previewLink a '...' helyere?-->
             <img class="card-img-top" src="" (error)="previewImage($event, item.id)" alt="Animation preview">
             <div class="card-body">
               <h5 class="card-title">{{item.title}}</h5>
-              <!--TODO: a meretet meg fogjuk kapni a backendtol?-->
               <p class="card-text text-italic">{{item.fileSizeInMb}} Mb</p>
             </div>
             <div class="card-footer">
@@ -24,4 +28,3 @@
     [collectionSize]="totalElements"
   ></ngb-pagination>
 </div>
-

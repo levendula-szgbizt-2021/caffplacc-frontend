@@ -7,18 +7,20 @@ export interface AnimationResponse{
 
 export interface AnimationDetailedResponse{
 	id: string,
+	userId:string,
 	title: string,
 	fileSizeInMb: number,
 	uploaderUserName: string,
 	uploadDate: string,
 	hash: string,
-	comments: CommentResponse
+	comments: CommentResponse[]
 }
 
 export interface CommentResponse{
 	content: string,
 	date: string,
 	id: string,
+	userId: string,
 	userName: string,
 }
 
@@ -51,3 +53,12 @@ export interface Paged<T>{
 }
 
 export type AnimationListResponse = Paged<AnimationResponse>;
+
+
+export interface UpdateAnimationRequest{
+	title:string,
+}
+
+export interface CommentCreateUpdateRequest{
+	content:string,
+}

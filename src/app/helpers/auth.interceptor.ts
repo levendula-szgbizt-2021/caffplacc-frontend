@@ -1,24 +1,35 @@
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, throwError } from "rxjs";
+import { catchError, switchMap, tap } from "rxjs/operators";
+import { AuthService } from "../services/auth.service";
+import { TokenService } from "../services/token.service";
+import { JWTResponse } from "../shared/models/auth.model";
+
+const ACCESS_TOKEN_KEY = 'auth-token-caffplacc';
+const REFRESH_TOKEN_KEY = 'auth-refresh-token-caffplacc';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+    constructor(private authService: AuthService, private tokenService : TokenService) {}
 
-    intercept(req: HttpRequest<any>,
-              next: HttpHandler): Observable<HttpEvent<any>> {
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-		//TODO iderakni a tokent, ha tudjuk honnan van, meg egy értelmesebb név
-        const idToken = localStorage.getItem("id_token");
+        const accessToken = sessionStorage.getItem(ACCESS_TOKEN_KEY);
+        const refreshToken = sessionStorage.getItem(REFRESH_TOKEN_KEY)
 
-        if (idToken) {
-            const cloned = req.clone({
-                headers: req.headers.set("Authorization",
-                    "Bearer " + idToken)
-            });
-
-            return next.handle(cloned);
-        }
+        if (accessToken) {
+            const cloned = req.clone({ headers: req.headers.set("Authorization", "Bearer " + accessToken)});
+            return next.handle(cloned).pipe(catchError((err) => {
+                if ([401].includes(err.status) && refreshToken) {
+                    return this.authService.getNewToken({refreshToken}).pipe(switchMap((data: JWTResponse) =>{
+                        this.tokenService.saveToken(data.token);
+                        return next.handle(req.clone({ headers: req.headers.set("Authorization", "Bearer " + this.tokenService.getToken())}));
+                    }))
+                }
+                return throwError(err);
+            }
+        ))}
         else {
             return next.handle(req);
         }

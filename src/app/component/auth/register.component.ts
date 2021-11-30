@@ -9,19 +9,17 @@ import { textChangeRangeIsUnchanged } from 'typescript';
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  providers:[AuthService]
 })
 export class RegisterComponent implements OnInit {
 
   submitted = false;
   errorMessage = '';
   registerform!: FormGroup;
-  loading=false;
+  loading = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute,
     private authService: AuthService,
     ) { }
 
