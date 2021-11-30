@@ -24,7 +24,13 @@ export class AdminService {
   }
 
   public UpdateUser(id:string, request: UserCreateUpdateRequest){
-    return this.http.put(ADMIN_API+"/settings/"+id,request,httpOptions);
+    const req : UserCreateUpdateRequest = {
+      email: !!request.email?request.email:null,
+      username: !!request.username?request.username:null,
+      password: !!request.password?request.password:null,
+      admin: request.admin,
+    }
+    return this.http.put(ADMIN_API+"/settings/"+id,req,httpOptions);
   }
 
   public DeleteUser(id:string){

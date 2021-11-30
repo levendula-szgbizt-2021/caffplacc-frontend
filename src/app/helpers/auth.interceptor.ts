@@ -23,7 +23,6 @@ export class AuthInterceptor implements HttpInterceptor {
             return next.handle(cloned).pipe(catchError((err) => {
                 if ([401].includes(err.status) && refreshToken) {
                     return this.authService.getNewToken({refreshToken}).pipe(switchMap((data: JWTResponse) =>{
-                        console.log("akármi");
                         this.tokenService.saveToken(data.token);
                         return next.handle(req.clone({ headers: req.headers.set("Authorization", "Bearer " + this.tokenService.getToken())}));
                     }))

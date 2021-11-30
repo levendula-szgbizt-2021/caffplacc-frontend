@@ -20,7 +20,13 @@ export class UserService {
   }
 
   updateprofile(regDto: UpdateProfileRequest): Observable<any> {
-    return this.http.post(USER_URL + 'settings', regDto, {responseType:'text'});
+    const req : UpdateProfileRequest = {
+      email: !!regDto.email?regDto.email:null,
+      username: !!regDto.username?regDto.username:null,
+      password: !!regDto.password?regDto.password:null,
+    }
+    console.log("akármi");
+    return this.http.post(USER_URL + 'settings', req, {responseType:'text'});
   }
 
   getprofile(): Observable<UpdateProfilResponse> {

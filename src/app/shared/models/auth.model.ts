@@ -30,9 +30,9 @@ export interface RegisterRequest{
 }
 
 export interface UpdateProfileRequest{
-	username: string,
-	password: string,
-	email:string,
+	username: string | null,
+	password: string | null,
+	email:string | null,
 }
 
 export interface UpdateProfilResponse{

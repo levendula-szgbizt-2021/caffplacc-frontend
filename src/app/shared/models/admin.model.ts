@@ -1,9 +1,9 @@
 import { Paged } from "./animation.model";
 
 export interface UserCreateUpdateRequest{
-	username:string,
-	password:string,
-	email:string,
+	username:string | null,
+	password:string | null,
+	email:string | null,
 	admin:boolean,
 }
 

@@ -24,17 +24,16 @@ export class EditProfileComponent implements OnInit {
 
   async ngOnInit() {
     this.loading = true
-    this.user = await this.userService.getprofile().toPromise();
-    
     this.form = this.formBuilder.group(
       {
-        username: [null],
-        email: [null, Validators.email],
-        password: [null, [Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")]],
+        username: [""],
+        email: ["", Validators.email],
+        password: ["", [Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")]],
       })
+    const confirmPasswordControl = new FormControl('', [sameValueAs(this.form, 'password')]);
+    this.form.addControl('password2', confirmPasswordControl)
+    this.user = await this.userService.getprofile().toPromise();
 
-      const confirmPasswordControl = new FormControl('', [sameValueAs(this.form, 'password')]);
-      this.form.addControl('password2', confirmPasswordControl)
       this.loading = false;
   }
 
@@ -53,6 +52,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   async onSubmit() {
+    console.log("Mi a csöcs van")
     this.submitted = true;
     if (this.form.invalid) {
       return;
