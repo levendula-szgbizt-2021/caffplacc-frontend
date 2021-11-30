@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authService.checkLogin();
     this.authService.getUpdate().subscribe(data =>
       {
         this.currentLoggedIn = data;

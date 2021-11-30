@@ -28,4 +28,8 @@ export class TokenService {
     return window.sessionStorage.getItem(TOKEN_KEY);
   }
 
+  public getRefreshToken(){
+    return window.sessionStorage.getItem(REFRESH_KEY)
+  }
+
 }

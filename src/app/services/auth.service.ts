@@ -1,8 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 import { JWTResponse, LoginRequest, LoginResponse, RefreshTokenRequest, RegisterRequest } from '../shared/models/auth.model';
 import { TokenService } from './token.service';
 
@@ -17,13 +16,24 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService{
 
   public loggedInSubject= new BehaviorSubject<boolean>(false);
   public userId: string = '';
   public role: string[] = [];
 
-  constructor(private http: HttpClient, private tokenService: TokenService, private router: Router) { 
+  constructor(private http: HttpClient, private tokenService: TokenService, private router: Router) {
+
+  }
+  checkLogin(): void {
+    const refreshToken = this.tokenService.getRefreshToken()
+    if(refreshToken){
+      this.getNewToken({refreshToken}).subscribe((value)=>{
+          this.userId = value.userId;
+          this.role = value.roles;
+          this.loggedInSubject.next(true);
+      })
+    }
   }
 
   sendUpdate(message: boolean) { 
