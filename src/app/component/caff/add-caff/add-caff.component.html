@@ -6,10 +6,15 @@
 		<label htmlFor="caff-upload-file">Animation file:</label>
 		<input type="file" id="caff-upload-file" class="form-control" (change)="handleFileInput($event)">
 		<div class="d-flex flex-row justify-content-between my-2">
-			<button class="btn btn-success" (click)="onSubmit()">
+			<div *ngIf="loading" class="loading-spinner">
+				<div class="spinner-border" role="status">
+					<span class="sr-only">Loading...</span>
+				</div>
+			</div>
+			<button class="btn btn-success" (click)="onSubmit()" *ngIf="!loading">
 				Upload
 			</button>
-			<button class="btn btn-dark" [routerLink]="['/my-caffs']">
+			<button class="btn btn-dark" [routerLink]="['/my-caffs']" *ngIf="!loading">
 				Cancel
 			</button>
 		</div>
