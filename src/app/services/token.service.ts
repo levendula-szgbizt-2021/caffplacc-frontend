@@ -11,21 +11,21 @@ export class TokenService {
   constructor() { }
 
   public saveToken(token: string): void {
-    window.localStorage.removeItem(TOKEN_KEY);
-    window.localStorage.setItem(TOKEN_KEY, token);
+    window.sessionStorage.removeItem(TOKEN_KEY);
+    window.sessionStorage.setItem(TOKEN_KEY, token);
   }
 
   public saveRefreshToken(token: string): void {
-    window.localStorage.removeItem(REFRESH_KEY);
-    window.localStorage.setItem(REFRESH_KEY, token);
+    window.sessionStorage.removeItem(REFRESH_KEY);
+    window.sessionStorage.setItem(REFRESH_KEY, token);
   }
 
   public signOut(): void {
-    localStorage.clear();
+    sessionStorage.clear();
   }
 
   public getToken(): string | null {
-    return window.localStorage.getItem(TOKEN_KEY);
+    return window.sessionStorage.getItem(TOKEN_KEY);
   }
 
 }
