@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { JWTResponse, LoginRequest, LoginResponse, RefreshTokenRequest, RegisterRequest } from '../shared/models/auth.model';
 import { TokenService } from './token.service';
 
@@ -19,8 +20,8 @@ const httpOptions = {
 export class AuthService {
 
   public loggedInSubject= new BehaviorSubject<boolean>(false);
-  private userId: string = '';
-  private role: string[] = [];
+  public userId: string = '';
+  public role: string[] = [];
 
   constructor(private http: HttpClient, private tokenService: TokenService, private router: Router) { 
   }

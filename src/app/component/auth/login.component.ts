@@ -47,12 +47,14 @@ export class LoginComponent implements OnInit {
             .subscribe(
                 data => {
                     this.tokenService.saveToken(data.token);
+                    this.authService.role = data.roles;
+                    this.authService.userId = data.userId;
                     this.tokenService.saveRefreshToken(data.refreshToken);
                     this.authService.sendUpdate(true);
                     this.router.navigate(['/home']);
                 },
                 error => {
-                    this.errorMessage = error;
+                    this.errorMessage = error.message;
                     this.loading = false;
                 });
   }

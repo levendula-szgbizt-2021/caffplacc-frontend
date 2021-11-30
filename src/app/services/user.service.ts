@@ -27,4 +27,8 @@ export class UserService {
     return this.http.get<UpdateProfilResponse>(USER_URL + 'settings', httpOptions);
   }
 
+  deleteprofile() {
+    return this.http.delete(USER_URL + 'settings', httpOptions);
+  }
+
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { UpdateProfilResponse } from 'src/app/shared/models/auth.model';
 
@@ -18,7 +19,8 @@ export class EditProfileComponent implements OnInit {
 
   constructor(private userService: UserService,
     private formBuilder: FormBuilder,
-    private router: Router){ }
+    private router: Router,
+    private authService: AuthService){ }
 
   async ngOnInit() {
     this.loading = true
@@ -42,6 +44,12 @@ export class EditProfileComponent implements OnInit {
 
   async invalidate(){
     this.user = await this.userService.getprofile().toPromise();
+  }
+
+  async onDelete(){
+    await this.userService.deleteprofile().toPromise();
+    this.authService.logout();
+    this.router.navigate(["/home"]);
   }
 
   async onSubmit() {
