@@ -30,7 +30,7 @@ export class EditProfileComponent implements OnInit {
       {
         username: [null],
         email: [null, Validators.email],
-        password: ['', [Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")]],
+        password: [null, [Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")]],
       })
 
       const confirmPasswordControl = new FormControl('', [sameValueAs(this.form, 'password')]);

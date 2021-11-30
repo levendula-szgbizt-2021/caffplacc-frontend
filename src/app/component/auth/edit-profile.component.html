@@ -36,7 +36,7 @@
             <div class="col">
                 <div class="form-group">
                     <label >New Password</label>
-                    <input type="text" formControlName="password" class="form-control" placeholder="new password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                    <input type="password" formControlName="password" class="form-control" placeholder="new password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
                     <div *ngIf="f.password.touched && f.password.invalid" class="alert alert-danger">
                         <div *ngIf="f.password.errors?.pattern">The password must contain at least one upper and lower case character and a number and be 8 long</div>
                     </div>
@@ -47,7 +47,7 @@
             <div class="col">
                 <div class="form-group">
                     <label >Confirm new password</label>
-                    <input type="text" formControlName="password2" class="form-control" placeholder="confirm new password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                    <input type="password" formControlName="password2" class="form-control" placeholder="confirm new password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
                     <div *ngIf="f.password2.touched && f.password2.invalid" class="alert alert-danger">
                         <div *ngIf="f.password2.errors?.valueDifferentFrom">The confirm password must match the password</div>
                     </div>
