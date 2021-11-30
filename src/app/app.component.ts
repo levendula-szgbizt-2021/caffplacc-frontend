@@ -24,9 +24,6 @@ export class AppComponent implements OnInit {
       })
   }
 
-  onDirect(){
-    this.router.navigateByUrl("/home");
-  }
 
   onSearch(){
     console.log(this.search)
