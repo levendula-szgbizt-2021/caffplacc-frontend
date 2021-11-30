@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { LoginRequest, LoginResponse, RegisterRequest } from '../shared/models/auth.model';
+import { JWTResponse, LoginRequest, LoginResponse, RegisterRequest } from '../shared/models/auth.model';
 import { TokenService } from './token.service';
 
 //TODO: replace with ours when its published by Ákos
@@ -39,6 +39,10 @@ export class AuthService {
 
   register(regDto: RegisterRequest): Observable<any> {
     return this.http.post(AUTH_API + 'register', regDto, {responseType:'text'});
+  }
+
+  getNewToken(token: string){
+    return this.http.post<JWTResponse>(AUTH_API + 'refresh', token, httpOptions);
   }
 
   getUserId(){

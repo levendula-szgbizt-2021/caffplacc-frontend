@@ -1,26 +1,34 @@
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { catchError } from "rxjs/operators";
+import { AuthService } from "../services/auth.service";
+import { TokenService } from "../services/token.service";
 
-const TOKEN_KEY = 'auth-token-caffplacc';
+const ACCESS_TOKEN_KEY = 'auth-token-caffplacc';
+const REFRESH_TOKEN_KEY = 'auth-refresh-token-caffplacc';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+    constructor(private authService: AuthService, private tokenService : TokenService) {}
 
-    intercept(req: HttpRequest<any>,
-              next: HttpHandler): Observable<HttpEvent<any>> {
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-		//TODO iderakni a tokent, ha tudjuk honnan van, meg egy értelmesebb név
-        const idToken = localStorage.getItem(TOKEN_KEY);
+        const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+        const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY)
 
-        if (idToken) {
-            const cloned = req.clone({
-                headers: req.headers.set("Authorization",
-                    "Bearer " + idToken)
-            });
-
-            return next.handle(cloned);
-        }
+        if (accessToken) {
+            const cloned = req.clone({ headers: req.headers.set("Authorization", "Bearer " + accessToken)});
+            return next.handle(cloned).pipe(catchError(err => {
+                if ([401, 403].includes(err.status) && refreshToken) {
+                    this.authService.getNewToken(refreshToken).subscribe(data =>{
+                        this.tokenService.saveToken(data.token);
+                        //vagy az accesstoken kéne?
+                        return next.handle(req.clone({ headers: req.headers.set("Authorization", "Bearer " + this.tokenService.getToken())}));
+                    })
+                }
+            }
+        ))}
         else {
             return next.handle(req);
         }

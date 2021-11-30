@@ -11,6 +11,13 @@ export interface LoginResponse{
 	roles: string[];
 }
 
+export interface JWTResponse{
+	token: string,
+	refreshToken: string,
+	userId: string;
+	username: string;
+	roles: string[];
+}
 export interface RegisterRequest{
 	username: string,
 	password: string,
