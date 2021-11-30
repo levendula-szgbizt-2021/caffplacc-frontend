@@ -16,6 +16,7 @@ import { AddCaffComponent } from './component/caff/add-caff/add-caff.component';
 import { EditProfileComponent } from './component/auth/edit-profile.component';
 import { MyCaffComponent } from './component/caff/my-caff/my-caff.component';
 import { CommentComponent } from './component/caff/comment/comment.component';
+import { UsersComponent } from './component/admin/users/users.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { CommentComponent } from './component/caff/comment/comment.component';
     AddCaffComponent,
     EditProfileComponent,
     MyCaffComponent,
-    CommentComponent
+    CommentComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,

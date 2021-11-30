@@ -8,6 +8,7 @@ import { CaffDetailsComponent } from './component/caff/caff-details/caff-details
 import { AddCaffComponent } from './component/caff/add-caff/add-caff.component';
 import { MyCaffComponent } from './component/caff/my-caff/my-caff.component';
 import { EditProfileComponent } from './component/auth/edit-profile.component';
+import { UsersComponent } from './component/admin/users/users.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path:'caffs/add', component: AddCaffComponent},
   { path: 'caffs/:id', component: CaffDetailsComponent},
   { path: "profile", component: EditProfileComponent},
+  {path:"admin",component: UsersComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 
