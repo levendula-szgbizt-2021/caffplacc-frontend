@@ -14,4 +14,4 @@ RUN npm run build --prod
 
 FROM base as final
 COPY --from=build /app/dist/caffplacc-client /usr/share/nginx/html
-
+RUN chmod -R g+rX /usr/share/nginx/html/ && chmod -R o+rX /usr/share/nginx/html/
