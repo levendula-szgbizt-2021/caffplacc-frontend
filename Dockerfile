@@ -13,5 +13,5 @@ COPY . /app
 RUN npm run build --prod
 
 FROM base as final
-COPY --from=build /app/docs /usr/share/nginx/html
+COPY --from=build /app/dist/caffplacc-client /usr/share/nginx/html
 
