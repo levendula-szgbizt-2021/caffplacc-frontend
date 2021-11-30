@@ -7,10 +7,11 @@ export interface UserCreateUpdateRequest{
 	admin:boolean,
 }
 
-export interface UserResponse{
+export interface AdminUserResponse{
 	username:string,
 	email:string,
 	id:string,
+	admin: boolean,
 }
 
-export type UserListResponse = Paged<UserResponse>
+export type UserListResponse = Paged<AdminUserResponse>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CaffService } from 'src/app/services/caff.service';
 
 @Component({
@@ -11,7 +12,7 @@ export class AddCaffComponent implements OnInit {
   file: File | null = null;
  
 
-  constructor(private caffService: CaffService) { }
+  constructor(private caffService: CaffService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -19,8 +20,13 @@ export class AddCaffComponent implements OnInit {
   public async onSubmit(){
     console.log("Akármi",this.title,this.file)
     if(this.file){
-      console.log(typeof(this.file))
-      await this.caffService.CreateAnimation(this.title,this.file).toPromise();
+      try{
+        await this.caffService.CreateAnimation(this.title,this.file).toPromise();
+        this.router.navigate(["my-caffs"]);
+      }
+      catch(e : any){
+        alert("Error happened during the upload: "+e.message);
+      }
     }
       
   }

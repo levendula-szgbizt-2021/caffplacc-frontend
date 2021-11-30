@@ -51,7 +51,7 @@ export class MyCaffComponent implements OnInit {
     }
   
     async invalidate(){
-      const res = await this.caffService.GetAnimations(this.search,this.page-1,this.pageSize).toPromise();
+      const res = await this.caffService.GetMyAnimations(this.search,this.page-1,this.pageSize).toPromise();
       this.totalPages = res.totalPages;
       this.totalElements =res.totalElements;
       this.caffs = res.content
