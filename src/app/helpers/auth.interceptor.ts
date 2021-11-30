@@ -1,6 +1,6 @@
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { AuthService } from "../services/auth.service";
 import { TokenService } from "../services/token.service";
@@ -19,14 +19,14 @@ export class AuthInterceptor implements HttpInterceptor {
 
         if (accessToken) {
             const cloned = req.clone({ headers: req.headers.set("Authorization", "Bearer " + accessToken)});
-            return next.handle(cloned).pipe(catchError(err => {
-                if ([401, 403].includes(err.status) && refreshToken) {
+            return next.handle(cloned).pipe(catchError((err) => {
+                if ([401].includes(err.status) && refreshToken) {
                     this.authService.getNewToken(refreshToken).subscribe(data =>{
                         this.tokenService.saveToken(data.token);
-                        //vagy az accesstoken kéne?
                         return next.handle(req.clone({ headers: req.headers.set("Authorization", "Bearer " + this.tokenService.getToken())}));
                     })
                 }
+                return throwError(err);
             }
         ))}
         else {
