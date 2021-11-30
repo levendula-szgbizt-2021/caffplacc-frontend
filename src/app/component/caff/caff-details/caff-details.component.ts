@@ -4,6 +4,8 @@ import { CaffService } from 'src/app/services/caff.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as dayjs from 'dayjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-caff-details',
@@ -20,12 +22,15 @@ export class CaffDetailsComponent implements OnInit {
   edit=false;
   editStr="";
 
+  canEdit = false;
+
 
   constructor(
     private caffService: CaffService,
     private route: ActivatedRoute,
     private modalService: NgbModal,
     private router: Router,
+    private auth: AuthService,
     ) { }
 
   async ngOnInit() {
@@ -33,6 +38,7 @@ export class CaffDetailsComponent implements OnInit {
     this.id = id;
     await this.invalidate();
   }
+
 
   async onComment(){
     await this.caffService.AddComment(this.id,this.commentStr).toPromise();
@@ -49,8 +55,8 @@ export class CaffDetailsComponent implements OnInit {
   }
 
   async invalidate(){
-    console.log("invalidate happened");
     this.caff = await this.caffService.GetAnimationDetail(this.id).toPromise();
+    this.canEdit = this.caff.userId == this.auth.getUserId() || this.auth.isAdmin();
   }
 
   async onTitleSave(){
@@ -60,15 +66,22 @@ export class CaffDetailsComponent implements OnInit {
       this.edit = false;
     }
     catch(e){
-      console.log(e);
+        const error = e as HttpErrorResponse
+        alert("Editing title failed: "+error.message);
     }
   }
 
   onDelete(content:any){
     this.modalService.open(content).result.then(async (value)=>{
       if(value == "Ok"){
-        await this.caffService.DeleteAnimation(this.id).toPromise();
-        this.router.navigateByUrl("/my-caffs");
+        try{
+          await this.caffService.DeleteAnimation(this.id).toPromise();
+          this.router.navigateByUrl("/my-caffs");
+        }
+        catch(e){
+          const error = e as HttpErrorResponse
+          alert("Deleting caff failed: "+error.message);
+        }
       }
     })
   }

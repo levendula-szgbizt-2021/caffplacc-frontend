@@ -54,6 +54,10 @@ export class AuthService {
     return this.role;
   }
 
+  public isAdmin(){
+    return this.role.includes("ROLE_ADMIN");
+  }
+
   logout(){
     this.tokenService.signOut();
     this.loggedInSubject.next(false);

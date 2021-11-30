@@ -7,6 +7,7 @@ export interface AnimationResponse{
 
 export interface AnimationDetailedResponse{
 	id: string,
+	userId:string,
 	title: string,
 	fileSizeInMb: number,
 	uploaderUserName: string,
@@ -19,6 +20,7 @@ export interface CommentResponse{
 	content: string,
 	date: string,
 	id: string,
+	userId: string,
 	userName: string,
 }
 

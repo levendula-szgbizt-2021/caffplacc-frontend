@@ -4,7 +4,7 @@ import { Observable, throwError } from "rxjs";
 import { catchError, switchMap, tap } from "rxjs/operators";
 import { AuthService } from "../services/auth.service";
 import { TokenService } from "../services/token.service";
-import { JWTResponse, RefreshTokenRequest } from "../shared/models/auth.model";
+import { JWTResponse } from "../shared/models/auth.model";
 
 const ACCESS_TOKEN_KEY = 'auth-token-caffplacc';
 const REFRESH_TOKEN_KEY = 'auth-refresh-token-caffplacc';
@@ -22,8 +22,8 @@ export class AuthInterceptor implements HttpInterceptor {
             const cloned = req.clone({ headers: req.headers.set("Authorization", "Bearer " + accessToken)});
             return next.handle(cloned).pipe(catchError((err) => {
                 if ([401].includes(err.status) && refreshToken) {
-
-                    this.authService.getNewToken({refreshToken}).pipe(switchMap((data: JWTResponse) =>{
+                    return this.authService.getNewToken({refreshToken}).pipe(switchMap((data: JWTResponse) =>{
+                        console.log("akármi");
                         this.tokenService.saveToken(data.token);
                         return next.handle(req.clone({ headers: req.headers.set("Authorization", "Bearer " + this.tokenService.getToken())}));
                     }))

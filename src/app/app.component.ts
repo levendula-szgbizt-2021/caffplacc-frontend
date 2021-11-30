@@ -11,6 +11,7 @@ import { AuthService } from './services/auth.service';
 export class AppComponent implements OnInit {
   title = 'caffplacc-client'; 
   currentLoggedIn!: boolean;
+  isAdmin:boolean = false;
 
   search =""
 
@@ -21,6 +22,7 @@ export class AppComponent implements OnInit {
     this.authService.getUpdate().subscribe(data =>
       {
         this.currentLoggedIn = data;
+        this.isAdmin = this.authService.isAdmin();
       })
   }
 

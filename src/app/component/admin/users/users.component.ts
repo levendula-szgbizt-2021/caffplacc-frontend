@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -71,7 +72,14 @@ export class UsersComponent implements OnInit {
     this.selected = user;
     this.modalService.open(template).result.then(async (value)=>{
       if(value == "Ok" && this.selected){
-        await this.adminService.DeleteUser(this.selected.id).toPromise();
+        try{
+          await this.adminService.DeleteUser(this.selected.id).toPromise();
+          await this.invalidate();
+        }
+        catch(e: any){
+          const error = e as HttpErrorResponse
+          alert("Delete failed: "+error.message);
+       }
       }
     })
   }
@@ -86,10 +94,16 @@ export class UsersComponent implements OnInit {
     console.log(this.form.value);
     this.submitted = true;
     if(this.selected){
-      await this.adminService.UpdateUser(this.selected?.id,{
-        ...this.form.value
-      }).toPromise()
-      await this.invalidate();
+      try{
+        await this.adminService.UpdateUser(this.selected?.id,{
+          ...this.form.value
+        }).toPromise()
+        await this.invalidate();
+      }
+      catch(e: any){
+        const error = e as HttpErrorResponse
+        alert("Delete failed: "+error.message);
+     }
     }
 
   }
