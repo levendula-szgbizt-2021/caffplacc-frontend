@@ -3,7 +3,7 @@
       <div class="col" *ngFor="let item of caffs">
         <div class="card border-dark mb-3" style ="cursor:pointer" [routerLink]="['/caffs',item.id]">
             <!--TODO: ide jon majd a beerkezo caffban talalhato previewLink a '...' helyere?-->
-            <img class="card-img-top" src="/api/anim/{{item.id}}/preview" (error)="previewImage($event, item.id)" alt="Animation preview">
+            <img class="card-img-top" src="" (error)="previewImage($event, item.id)" alt="Animation preview">
             <div class="card-body">
               <h5 class="card-title">{{item.title}}</h5>
               <!--TODO: a meretet meg fogjuk kapni a backendtol?-->

@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdminService } from 'src/app/services/admin.service';
-import { UserResponse } from 'src/app/shared/models/admin.model';
+import { AdminUserResponse } from 'src/app/shared/models/admin.model';
 
 @Component({
   selector: 'app-users',
@@ -21,9 +21,9 @@ export class UsersComponent implements OnInit {
     ) { }
 
   loading=true;
-  users:UserResponse[] = []
+  users:AdminUserResponse[] = []
 
-  selected?: UserResponse;
+  selected?: AdminUserResponse;
 
   submitted = false;
   form: FormGroup = new FormGroup({
@@ -67,7 +67,7 @@ export class UsersComponent implements OnInit {
     this.users = res.content
   }
 
-  onUserDelete(template:any, user: UserResponse){
+  onUserDelete(template:any, user: AdminUserResponse){
     this.selected = user;
     this.modalService.open(template).result.then(async (value)=>{
       if(value == "Ok" && this.selected){
@@ -76,18 +76,22 @@ export class UsersComponent implements OnInit {
     })
   }
 
-  onUserEdit(template:any, user: UserResponse){
+  onUserEdit(template:any, user: AdminUserResponse){
     this.selected = user;
     this.modalService.open(template);
-    this.form.setValue({username:null, email:null, password:null, admin:false})
+    this.form.setValue({username:null, email:null, password:null, admin:user.admin})
   }
 
   async submit(){
+    console.log(this.form.value);
     this.submitted = true;
-    if(this.selected)
+    if(this.selected){
       await this.adminService.UpdateUser(this.selected?.id,{
         ...this.form.value
       }).toPromise()
+      await this.invalidate();
+    }
+
   }
 
 }

@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
                     this.router.navigate(['/home']);
                 },
                 error => {
-                    this.errorMessage = error;
+                    this.errorMessage = error.message;
                     this.loading = false;
                 });
   }
