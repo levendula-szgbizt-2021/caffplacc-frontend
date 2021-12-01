@@ -102,7 +102,7 @@ export class UsersComponent implements OnInit {
       }
       catch(e: any){
         const error = e as HttpErrorResponse
-        alert("Delete failed: "+error.message);
+        alert("Updating user failed: "+error.message);
      }
     }
 

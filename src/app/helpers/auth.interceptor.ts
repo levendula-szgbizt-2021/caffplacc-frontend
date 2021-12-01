@@ -1,4 +1,4 @@
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from "@angular/common/http";
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
 import { catchError, switchMap, tap } from "rxjs/operators";
@@ -19,9 +19,15 @@ export class AuthInterceptor implements HttpInterceptor {
         const refreshToken = sessionStorage.getItem(REFRESH_TOKEN_KEY)
 
         if (accessToken) {
-            const cloned = req.clone({ headers: req.headers.set("Authorization", "Bearer " + accessToken)});
-            return next.handle(cloned).pipe(catchError((err) => {
+            const cloned = (req.url.includes('/api/auth/refresh'))?req: req.clone({ headers: req.headers.set("Authorization", "Bearer " + accessToken)});
+            return next.handle(cloned).pipe(catchError((err: HttpErrorResponse) => {
                 if ([401].includes(err.status) && refreshToken) {
+                    if(err.url?.includes('/api/auth/refresh')){
+                        alert("Your session has expired, please login again to use the portal.")
+                        this.authService.logout();
+                        return throwError(err); //Ha a refresh token failelt el akkor vége
+                    }
+
                     return this.authService.getNewToken({refreshToken}).pipe(switchMap((data: JWTResponse) =>{
                         this.tokenService.saveToken(data.token);
                         return next.handle(req.clone({ headers: req.headers.set("Authorization", "Bearer " + this.tokenService.getToken())}));

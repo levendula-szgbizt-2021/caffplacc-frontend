@@ -73,6 +73,7 @@
 		</button>
 	</div>
 	<div class="modal-body">
+		<p>All not setted attribute will remain the old one.</p>
 		<div class="form">
 			<form [formGroup]="form" (ngSubmit)="submit()">
 				<div class="form-row">
@@ -95,20 +96,10 @@
 					<div class="col">
 						<div class="form-group">
 							<label >New Password</label>
-							<input type="text" formControlName="password" class="form-control" placeholder="new password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+							<input type="password" formControlName="password" class="form-control" placeholder="new password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
 							<div *ngIf="f.password.touched && f.password.invalid" class="alert alert-danger">
 								<div *ngIf="f.password.errors?.pattern">The password must contain at least one upper and lower case character and a number and be 8 long</div>
 							</div>
-						</div>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col">
-						<div class="form-check">
-							<input class="form-check-input" formControlName="admin" type="checkbox" value="" id="adminCheckbox">
-							<label class="form-check-label" for="adminCheckbox">
-							  Has Admin rights
-							</label>
 						</div>
 					</div>
 				</div>
