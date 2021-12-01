@@ -32,7 +32,7 @@
 			<p class="mb-0">Uploaded at: {{toDateFormat(caff?.uploadDate)}}</p>
 			<p class="mb-0">File size: {{caff?.fileSizeInMb}} MB</p>
 			<div>
-				SHA2 Hash: {{caff?.hash}}
+				SHA256: {{caff?.hash}}
 			</div>
 			<div class="mx-auto w-100">
 				<button class="btn btn-primary" (click)="onDownload()">Download</button>
