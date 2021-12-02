@@ -29,8 +29,7 @@ export class AppComponent implements OnInit {
 
 
   onSearch(){
-    console.log(this.search)
-    this.router.navigateByUrl("/caffs?search="+this.search);
+    this.router.navigateByUrl("caffs?search="+this.search);
   }
 
   logout(event: MouseEvent){
