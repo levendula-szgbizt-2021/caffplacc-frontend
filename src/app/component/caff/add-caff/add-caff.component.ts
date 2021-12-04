@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CaffService } from 'src/app/services/caff.service';
@@ -28,7 +29,12 @@ export class AddCaffComponent implements OnInit {
         this.router.navigate(["my-caffs"]);
       }
       catch(e : any){
-        alert("Error happened during the upload: "+e.message);
+        if(e.status == 500)
+          alert("Error happened during the upload, please try it later, or contact us.")
+        else if(e.status == 400)
+          alert("The uploaded file is malformed or damaged, check its consistency.")
+        else
+          alert("Unexpected error occured during the upload: "+e.message);
         this.loading = false;
       }
     }
